@@ -18,12 +18,12 @@ public class CreateProductServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            int id = Integer.parseInt(req.getParameter("ID"));
-            String name = req.getParameter("Name");
-            double price = Double.parseDouble(req.getParameter("Price"));
-            String description = req.getParameter("Description");
-            String thumbnail = req.getParameter("Thumbnail");
-            int status = Integer.parseInt(req.getParameter("Status"));
+            int id = Integer.parseInt(req.getParameter("id"));
+            String name = req.getParameter("name");
+            double price = Double.parseDouble(req.getParameter("price"));
+            String description = req.getParameter("description");
+            String thumbnail = req.getParameter("thumbnail");
+            int status = Integer.parseInt(req.getParameter("status"));
 
             Product product = new Product(id, name, description, thumbnail, price, status);
             ListProductServlet.list.add(product);
