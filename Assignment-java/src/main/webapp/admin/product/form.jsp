@@ -1,4 +1,18 @@
-
+<%@ page import="com.example.assignmentjava.entity.Product" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    request.setCharacterEncoding("utf-8");
+    Product product = (Product) request.getAttribute("product");
+    HashMap<String, String> errors = (HashMap<String, String>) request.getAttribute("errors");
+    if (product == null) {
+        product = new Product();
+    }
+    if (errors == null) {
+        errors = new HashMap<>();
+    }
+%>
 
 <!DOCTYPE html>
 <html>

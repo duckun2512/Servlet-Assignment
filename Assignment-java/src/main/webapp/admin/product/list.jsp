@@ -1,10 +1,10 @@
-<%@ page import="com.example.javaservletassignment.entity.Food" %>
+<%@ page import="com.example.assignmentjava.entity.Product" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     request.setCharacterEncoding("utf-8");
-    ArrayList<Food> list = (ArrayList<Food>) request.getAttribute("list");
+    ArrayList<Product> list = (ArrayList<Product>) request.getAttribute("list");
     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 %>
 
