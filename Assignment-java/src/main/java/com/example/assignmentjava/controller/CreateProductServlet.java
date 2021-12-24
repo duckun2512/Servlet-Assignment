@@ -25,7 +25,7 @@ public class CreateProductServlet extends HttpServlet {
             String thumbnail = req.getParameter("thumbnail");
             int status = Integer.parseInt(req.getParameter("status"));
 
-            Product product = new Product(id, name, description, thumbnail, price, status);
+            Product product = new Product(name, description, thumbnail, price, status);
             ListProductServlet.list.add(product);
             resp.sendRedirect("/admin/product/list");
 
