@@ -105,16 +105,12 @@ public class Phone {
         HashMap<String, String> errors = new HashMap<>();
         if (name == null || name.length() == 0) {
             errors.put("name", "Enter product's Name.");
-        } else if (name.length() <= 7) {
-            errors.put("name", "Name must have more than 7 characters.");
         }
         if (description == null || description.length() == 0) {
             errors.put("description", "Enter product's Description.");
         }
         if (brand == null || brand.length() == 0) {
-            errors.put("thumbnail", "Enter product's Thumbnail.");
-        } else if (!ValidationUtil.checkUrl(brand)) {
-            errors.put("thumbnail", "URL is not right, please input again.");
+            errors.put("brand", "Enter product's Brand.");
         }
         if (price == 0) {
             errors.put("price", "Enter product's Price.");

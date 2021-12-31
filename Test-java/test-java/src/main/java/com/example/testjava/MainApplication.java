@@ -15,34 +15,42 @@ import java.util.Set;
 
 public class MainApplication {
     public static void main(String[] args) {
-        // Quét toàn bộ project xem những class nào được đánh dấu là @Table,
+        // Quét toàn bộ project xem class nào đc đánh dấu là
         Reflections reflections = new Reflections("com.example.testjava");
-        // trả về một set tập hợp các class được đánh dấu.
+        // @Table, trả về 1 set tập hợp các class đc đánh dấu
         Set<Class<?>> annotated = reflections.getTypesAnnotatedWith(Entity.class);
-        for (Class<?> clazz :
-                annotated) {
-            // thực hiện migrate cho class đó.
+        for (Class<?> clazz : annotated) {
+            // thực hiện migrate cho class đó
             doMigrate(clazz);
         }
+
+        //thực hiện add khóa ngoại
+//        for (Class<?> clazz : annotated) {
+//            addForeignKey(clazz);
+//        }
     }
 
     static void doMigrate(Class clazz) {
+        System.out.println("====================");
         StringBuilder stringBuilder = new StringBuilder();
-        // lấy tên class
-        System.out.println("Migrating class " + clazz.getName());
+
+        System.out.println("Migrating class: " + clazz.getName());
         if (!clazz.isAnnotationPresent(Entity.class)) {
-            System.err.println("Class không được đánh dấu là table trong database. Bỏ qua.");
+            System.err.println("Class không đc xác định là table. Bỏ qua migration!");
             return;
         }
-        // chắc chắc class đã được đánh dấu annotation là @Table
+
+        // chắc chắn class đã đc đánh dấu annotation là @Table
         // @Table
-        // lấy thông tin annotation ra.
-        String tableName = clazz.getSimpleName().toLowerCase() + "s";
+        // Lấy thông tin annotation ra
         Entity annotationTable = (Entity) clazz.getAnnotation(Entity.class);
+
         String annotationTableName = annotationTable.tableName();
+        String tableName = clazz.getSimpleName().toLowerCase() + "s";
         if (annotationTableName != null && annotationTableName.length() > 0) {
             tableName = annotationTableName;
         }
+
         stringBuilder.append(SQLConstant.CREATE_TABLE);
         stringBuilder.append(SQLConstant.SPACE);
         stringBuilder.append(tableName);
@@ -51,10 +59,10 @@ public class MainApplication {
 
         // trả về danh sách các thuộc tính.
         Field[] fields = clazz.getDeclaredFields();
-
         for (int i = 0; i < fields.length; i++) {
-            String fieldName = fields[i].getName(); // tên trường
-            String fieldType = fields[i].getType().getName(); // kiểu giá trị của trường.
+            String fieldName = fields[i].getName();
+            String fieldType = fields[i].getType().getSimpleName();
+            fields[i].setAccessible(true);
             if (fields[i].isAnnotationPresent(Column.class)) {
                 Column annotationColumn = fields[i].getAnnotation(Column.class);
                 if (annotationColumn.columnName().length() > 0) {
@@ -64,15 +72,17 @@ public class MainApplication {
                     fieldType = annotationColumn.columnType();
                 }
             }
+
             stringBuilder.append(fieldName);
             stringBuilder.append(SQLConstant.SPACE);
             stringBuilder.append(fieldType);
-            // Check xem trường có phải là khoá chính hay không?
+
+            // Check xem trường có phải là khóa chính hay không
             if (fields[i].isAnnotationPresent(Id.class)) {
                 stringBuilder.append(SQLConstant.SPACE);
                 stringBuilder.append(SQLConstant.PRIMARY_KEY);
-                Id annotationId = fields[i].getAnnotation(Id.class); // lấy ra thông tin annotation
-                // để check thuộc tính auto_increment.
+                // lấy ra thông tin để check ttinh auto increment
+                Id annotationId = fields[i].getAnnotation(Id.class);
                 if (annotationId.autoIncrement()) {
                     stringBuilder.append(SQLConstant.SPACE);
                     stringBuilder.append(SQLConstant.AUTO_INCREMENT);
@@ -88,17 +98,17 @@ public class MainApplication {
             cnn = ConnectionHelper.getConnection();
             Statement stt = cnn.createStatement();
             try {
-                System.out.println("Try to drop table '" + tableName + "' before recreate.");
+                System.out.println("Try to drop table: '" + tableName + "' before create");
                 stt.execute(SQLConstant.DROP_TABLE + SQLConstant.SPACE + tableName);
-                System.out.println("Drop table '" + tableName + "' success!");
+                System.out.println("Drop table '" + tableName + "' successfully");
             } catch (Exception ex) {
-                System.err.println("Drop table fails, error: " + ex.getMessage());
+                System.err.println("Drop table failed, errors: " + ex.getMessage());
             }
             System.out.println("Try to execute statement: '" + stringBuilder.toString() + "'");
             stt.execute(stringBuilder.toString());
             System.out.println("Create table success!");
         } catch (SQLException e) {
-            System.err.println("Create table fails, error: " + e.getMessage());
+            System.err.println("Create table failed, errors: " + e.getMessage());
             e.printStackTrace();
         }
     }

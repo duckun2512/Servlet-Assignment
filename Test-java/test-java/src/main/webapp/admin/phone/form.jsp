@@ -12,6 +12,7 @@
     }
     if (errors == null) {
         errors = new HashMap<>();
+    }
 %>
 <!DOCTYPE html>
 <html>
@@ -44,6 +45,24 @@
     </header>
 
     <div class="w3-padding w3-margin-bottom">
+        <%
+            if(errors.size() > 0) {
+        %>
+        <div class="w3-panel w3-red">
+            <strong>Error! Please fix the form below and try again!</strong>
+            <ul>
+                <%
+                    for (Map.Entry<String, String> entry: errors.entrySet()) {
+                %>
+                <li><%= entry.getValue()%></li>
+                <%
+                    }
+                %>
+            </ul>
+        </div>
+        <%
+            }
+        %>
         <form action="/admin/phone/create" method="post" class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
 
             <div class="w3-margin">
@@ -60,7 +79,7 @@
 
             <div class="w3-margin">
                 <label>Price</label>
-                <input class="w3-input" type="number" name="price" value="<%= product.getPrice()%>">
+                <input class="w3-input" type="number" name="price" value="<%= phone.getPrice()%>">
                 <%
                     if (errors.containsKey("price")) {
                 %>
@@ -72,7 +91,7 @@
 
             <div class="w3-margin">
                 <label>Description</label>
-                <input class="w3-input" type="text" name="description" value="<%= product.getDescription()%>">
+                <input class="w3-input" type="text" name="description" value="<%= phone.getDescription()%>">
                 <%
                     if (errors.containsKey("description")) {
                 %>
@@ -83,29 +102,12 @@
             </div>
 
             <div class="w3-margin">
-                <label>Thumbnail</label>
-                <input class="w3-input" type="url" name="thumbnail" value="<%= product.getThumbnail()%>">
+                <label>Brand</label>
+                <input class="w3-input" type="text" name="brand" value="<%= phone.getBrand()%>">
                 <%
-                    if (errors.containsKey("thumbnail")) {
+                    if (errors.containsKey("brand")) {
                 %>
-                <div class="w3-text-red w3-margin">* <%= errors.get("thumbnail")%></div>
-                <%
-                    }
-                %>
-            </div>
-
-            <div class="w3-margin">
-                <label>Started Date</label>
-                <input class="w3-input" type="date" name="startedDate">
-            </div>
-
-            <div class="w3-margin">
-                <label>Status</label>
-                <input class="w3-input" type="number" name="status" value="<%= product.getStatus()%>">
-                <%
-                    if (errors.containsKey("status")) {
-                %>
-                <div class="w3-text-red w3-margin">* <%= errors.get("status")%></div>
+                <div class="w3-text-red w3-margin">* <%= errors.get("brand")%></div>
                 <%
                     }
                 %>
@@ -113,6 +115,9 @@
 
             <p class="w3-center">
                 <button class="w3-button w3-section w3-blue w3-ripple"> Submit </button>
+            </p>
+            <p class="w3-center">
+                <button class="w3-button w3-section w3-blue w3-ripple"> Reset </button>
             </p>
         </form>
     </div>
@@ -128,6 +133,3 @@
 
 </body>
 </html>
-
-
-

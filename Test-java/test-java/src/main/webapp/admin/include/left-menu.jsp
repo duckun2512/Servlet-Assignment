@@ -35,9 +35,9 @@
     <div class="w3-bar-block">
         <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black"
            onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
-        <a href="/admin/product/list" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-list " aria-hidden="true"></i>&nbsp;
+        <a href="/admin/phone/list" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-list " aria-hidden="true"></i>&nbsp;
             List Phone</a>
-        <a href="/admin/product/create" class="w3-bar-item w3-button w3-padding"><i class="fa fa-plus"></i>&nbsp; Create New Phone</a>
+        <a href="/admin/phone/create" class="w3-bar-item w3-button w3-padding"><i class="fa fa-plus"></i>&nbsp; Create New Phone</a>
         <br><br>
     </div>
 </nav>

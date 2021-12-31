@@ -10,7 +10,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>CreatePhoneServlet</servlet-name>
-        <url-pattern>/admin/product/create</url-pattern>
+        <url-pattern>/admin/phone/create</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -19,6 +19,6 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ListPhoneServlet</servlet-name>
-        <url-pattern>/admin/product/list</url-pattern>
+        <url-pattern>/admin/phone/list</url-pattern>
     </servlet-mapping>
 </web-app>
