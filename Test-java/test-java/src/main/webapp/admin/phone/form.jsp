@@ -103,7 +103,14 @@
 
             <div class="w3-margin">
                 <label>Brand</label>
-                <input class="w3-input" type="text" name="brand" value="<%= phone.getBrand()%>">
+                <div class="col-sm-4">
+                <select class="form-select" id="brand" aria-label="Default select example" value="<%=phone.getBrand()%>" name="brand">
+                    <option selected value="0">Please select one of the follow brand</option>
+                    <option value="Apple">Apple</option>
+                    <option value="Samsung">Samsung</option>
+                    <option value="Nokia">Nokia</option>
+                    <option value="Others">Others</option>
+                </select>
                 <%
                     if (errors.containsKey("brand")) {
                 %>
@@ -111,6 +118,7 @@
                 <%
                     }
                 %>
+                </div>
             </div>
 
             <p class="w3-center">
